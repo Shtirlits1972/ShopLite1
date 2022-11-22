@@ -39,7 +39,7 @@ class ProductCrud {
 
   static Future upd(Product model) async {
     String command =
-        'UPDATE exercise SET NameProduct = ?, PriceProduct = ? WHERE id = ?';
+        'UPDATE Product SET NameProduct = ?, PriceProduct = ? WHERE id = ?';
     try {
       String strPath = await getDatabasesPath();
       String path = join(strPath, dbName);
