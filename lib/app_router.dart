@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shoplite1/block/order_row_block.dart';
 import 'package:shoplite1/form/cart.dart';
 import 'package:shoplite1/form/product_add_edit.dart';
 import 'package:shoplite1/form/product_view.dart';
@@ -9,13 +11,17 @@ import 'package:shoplite1/model/product.dart';
 
 class AppRouter {
   int selectIndex = 0;
+  final DataCubitOrderRow orderRow = DataCubitOrderRow(KeeperOrderRow());
 
   Route onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (context) => ShopMain(
-            selectedIndex: selectIndex,
+          builder: (context) => BlocProvider.value(
+            value: orderRow,
+            child: ShopMain(
+              selectedIndex: selectIndex,
+            ),
           ),
         );
 
@@ -29,8 +35,11 @@ class AppRouter {
 
       case '/Cart':
         return MaterialPageRoute(
-          builder: (context) => Cart(
-            selectedIndex: selectIndex,
+          builder: (context) => BlocProvider.value(
+            value: orderRow,
+            child: Cart(
+              selectedIndex: selectIndex,
+            ),
           ),
         );
 
@@ -43,8 +52,11 @@ class AppRouter {
 
       default:
         return MaterialPageRoute(
-          builder: (context) => ShopMain(
-            selectedIndex: selectIndex,
+          builder: (context) => BlocProvider.value(
+            value: orderRow,
+            child: ShopMain(
+              selectedIndex: selectIndex,
+            ),
           ),
         );
     }
