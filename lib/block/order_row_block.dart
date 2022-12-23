@@ -17,9 +17,10 @@ class DataCubitOrderRow extends Cubit<KeeperOrderRow> {
     for (int i = 0; i < state.order_row_List.length; i++) {
       if (row.ProductId == state.order_row_List[i].ProductId) {
         state.order_row_List[i].qty += row.qty;
-
-        if (state.order_row_List[i].qty == 0) {
-          removeByProductId(state.order_row_List[i].ProductId);
+        print(state.order_row_List[i]);
+        if (state.order_row_List[i].qty < 1) {
+          print('qty = 0');
+          removeByProductById(state.order_row_List[i].ProductId);
         }
         flag = true;
         break;
@@ -54,15 +55,12 @@ class DataCubitOrderRow extends Cubit<KeeperOrderRow> {
     state.order_row_List.clear();
   }
 
-  removeByProductId(int productId) {
-    int index = -1;
+  removeByProductById(int productId) {
     for (int i = 0; i < state.order_row_List.length; i++) {
       if (state.order_row_List[i].ProductId == productId) {
-        index = i;
+        state.order_row_List.removeAt(i);
+        print('remove $i');
         break;
-      }
-      if (index > -1) {
-        state.order_row_List.removeAt(index);
       }
     }
   }

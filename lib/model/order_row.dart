@@ -3,6 +3,7 @@
 class OrderRow {
   int id = 0;
   int ProductId = 0;
+  int OrderId = 0;
   String ProductName = '';
   double ProductPrice = 0;
   int qty = 0;
@@ -11,12 +12,13 @@ class OrderRow {
     return ProductPrice * qty;
   }
 
-  OrderRow(
-      this.id, this.ProductId, this.ProductName, this.ProductPrice, this.qty);
+  OrderRow(this.id, this.ProductId, this.OrderId, this.ProductName,
+      this.ProductPrice, this.qty);
 
   OrderRow.empty() {
     this.id = 0;
     this.ProductId = 0;
+    this.OrderId = 0;
     this.ProductName = '';
     this.ProductPrice = 0;
     this.qty = 0;
@@ -24,6 +26,6 @@ class OrderRow {
 
   @override
   String toString() {
-    return 'id = $id, ProductId = $ProductId, ProductName = $ProductName, ProductPrice = $ProductPrice, qty = $qty';
+    return 'id = $id, ProductId = $ProductId, OrderId = $OrderId, ProductName = $ProductName, ProductPrice = $ProductPrice, qty = $qty';
   }
 }

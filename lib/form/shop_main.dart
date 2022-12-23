@@ -61,6 +61,7 @@ class _ShopMainState extends State<ShopMain> {
                                 OrderRow row = OrderRow(
                                     0,
                                     products[index].id,
+                                    0,
                                     products[index].NameProduct,
                                     products[index].PriceProduct,
                                     1);

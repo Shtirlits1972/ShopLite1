@@ -20,6 +20,13 @@ class _CartState extends State<Cart> {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Cart'),
+        // actions: [
+        //   IconButton(
+        //     onPressed: () async {},
+        //     icon: const Icon(Icons.delete_rounded),
+        //     tooltip: 'Clear cart',
+        //   )
+        // ],
       ),
       body: BlocBuilder<DataCubitOrderRow, KeeperOrderRow>(
         builder: (context, state) {
@@ -28,6 +35,7 @@ class _CartState extends State<Cart> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
+                  flex: 10,
                   child: ListView.separated(
                     separatorBuilder: (context, index) => const Divider(
                       color: Colors.black,
@@ -69,6 +77,7 @@ class _CartState extends State<Cart> {
                                             .read<DataCubitOrderRow>()
                                             .getOrderRow[index]
                                             .ProductId,
+                                        0,
                                         context
                                             .read<DataCubitOrderRow>()
                                             .getOrderRow[index]
@@ -100,6 +109,7 @@ class _CartState extends State<Cart> {
                                             .read<DataCubitOrderRow>()
                                             .getOrderRow[index]
                                             .ProductId,
+                                        0,
                                         context
                                             .read<DataCubitOrderRow>()
                                             .getOrderRow[index]
@@ -130,10 +140,65 @@ class _CartState extends State<Cart> {
                     },
                   ),
                 ),
-                // Text(
-                //   'Total:  ${context.read<DataCubitOrderRow>().getTotal().toStringAsFixed(2)}\$',
-                //   style: txt20,
-                // )
+                Expanded(
+                  flex: 1,
+                  child: Text(
+                    'Total:  ${context.read<DataCubitOrderRow>().getTotal().toStringAsFixed(2)}\$',
+                    style: txt20,
+                  ),
+                ),
+                Expanded(
+                    flex: 1,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          width: 120,
+                          decoration: const BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: TextButton(
+                            onPressed: () {
+                              try {
+                                setState(() {
+                                  context.read<DataCubitOrderRow>().clear();
+                                  print('Clear cart');
+                                });
+                              } catch (e) {
+                                print(e);
+                              }
+                            },
+                            child: Text(
+                              'Clear',
+                              style: txt15,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: 120,
+                          decoration: const BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                          child: TextButton(
+                            onPressed: () {
+                              try {
+                                setState(() {
+                                  print('Add to order');
+                                });
+                              } catch (e) {
+                                print(e);
+                              }
+                            },
+                            child: Text(
+                              'Order',
+                              style: txt15,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ))
               ],
             ),
           );

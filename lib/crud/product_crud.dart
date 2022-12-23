@@ -4,9 +4,6 @@ import 'package:shoplite1/model/product.dart';
 import 'package:sqflite/sqflite.dart';
 
 class ProductCrud {
-
-
-  
   static Future<Product> add(Product model) async {
     String command =
         'INSERT INTO Product (NameProduct, PriceProduct) values(?, ?);';

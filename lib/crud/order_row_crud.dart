@@ -5,7 +5,8 @@ import 'package:sqflite/sqflite.dart';
 
 class OrderRowCrud {
   static Future<OrderRow> add(OrderRow model) async {
-    String command = 'INSERT INTO OrderRow(ProductId, Qty) values(?, ?);';
+    String command =
+        'INSERT INTO OrderRow(ProductId, OrderId, Qty) values(?, ?, ?);';
     OrderRow pr = OrderRow.empty();
 
     String strPath = await getDatabasesPath();
@@ -13,13 +14,29 @@ class OrderRowCrud {
     Database db = await openDatabase(path, version: 1);
 
     pr = await db.transaction<OrderRow>((txn) async {
-      int id = await txn.rawInsert(command, [model.ProductId, model.qty]);
+      int id = await txn
+          .rawInsert(command, [model.ProductId, model.OrderId, model.qty]);
 
-      OrderRow pr1 = OrderRow(id, model.ProductId, model.ProductName,
-          model.ProductPrice, model.qty);
+      OrderRow pr1 = OrderRow(id, model.ProductId, model.OrderId,
+          model.ProductName, model.ProductPrice, model.qty);
       return pr1;
     });
     return pr;
+  }
+
+  static Future delByOrderId(int OrderId) async {
+    String command = 'DELETE FROM OrderRow WHERE OrderId = ?';
+    try {
+      String strPath = await getDatabasesPath();
+      String path = join(strPath, dbName);
+      Database db = await openDatabase(path, version: 1);
+
+      int count = await db.rawDelete(command, [OrderId]);
+
+      print('row delete = $count ');
+    } catch (e) {
+      print(e);
+    }
   }
 
   static Future del(int id) async {
@@ -68,12 +85,13 @@ class OrderRowCrud {
       for (int i = 0; i < list.length; i++) {
         int id = list[i]['id'];
         int ProductId = int.parse(list[i]['ProductId']);
+        int OrderId = int.parse(list[i]['OrderId']);
         String ProductName = list[i]['ProductName'];
         double PriceProduct = double.parse(list[i]['PriceProduct'].toString());
         int Qty = int.parse(list[i]['Qty']);
 
         OrderRow orderRow =
-            OrderRow(id, ProductId, ProductName, PriceProduct, Qty);
+            OrderRow(id, ProductId, OrderId, ProductName, PriceProduct, Qty);
 
         listProduct.add(orderRow);
       }

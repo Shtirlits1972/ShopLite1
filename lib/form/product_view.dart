@@ -42,7 +42,7 @@ class _ProductViewState extends State<ProductView> {
               }
             },
             icon: const Icon(Icons.add_circle_outline),
-            tooltip: 'Add new Exercise',
+            tooltip: 'Add new product',
           )
         ],
       ),
