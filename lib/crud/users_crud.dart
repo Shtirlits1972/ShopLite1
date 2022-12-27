@@ -18,15 +18,16 @@ class UsersCrud {
       Database db = await openDatabase(path, version: 1);
 
       List<Map> list = await db.rawQuery(
-          'SELECT id, Login, IsRemember Password FROM users WHERE Login = ? AND Password = ? LIMIT 1 ;',
+          'SELECT id, Login, Password, IsRemember  FROM users WHERE Login = ? AND Password = ? LIMIT 1 ;',
           [Login, Password]);
 
       if (list != null && list.length > 0) {
         int id = list[0]['id'];
         String Login = list[0]['Login'];
         String Password = list[0]['Password'];
-        bool IsRemember = list[0]['IsRemember'];
-        users pr = users(id, Login, Password, IsRemember);
+        bool IsRemember = list[0]['IsRemember'] == 1 ? true : false;
+        users userLog = users(id, Login, Password, IsRemember);
+        return userLog;
       }
     } catch (e) {
       print(e);
@@ -43,7 +44,8 @@ class UsersCrud {
     Database db = await openDatabase(path, version: 1);
 
     model = await db.transaction<users>((txn) async {
-      int id = await txn.rawInsert(command, [model.Login, model.Password]);
+      int id = await txn
+          .rawInsert(command, [model.Login, model.Password, model.IsRemember]);
       model = users(id, model.Login, model.Password, model.IsRemember);
       return model;
     });

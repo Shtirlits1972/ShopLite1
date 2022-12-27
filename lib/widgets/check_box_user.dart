@@ -11,7 +11,7 @@ class CheckboxWidget extends StatefulWidget {
 }
 
 class _CheckboxWidgetState extends State<CheckboxWidget> {
-  bool _checkbox = true;
+  bool _checkbox = false;
 
   @override
   Widget build(BuildContext context) {
@@ -30,17 +30,5 @@ class _CheckboxWidgetState extends State<CheckboxWidget> {
         )
       ],
     );
-
-    // CheckboxListTile(
-    //   title:  Text(
-    //     'Remember me',
-    //     style: txt30,
-    //   ),
-    //   value: _checkbox,
-    //   onChanged: (value) {
-    //     widget.callback(value!);
-    //     setState(() => _checkbox = !_checkbox);
-    //   },
-    // );
   }
 }
