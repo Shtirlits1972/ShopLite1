@@ -6,8 +6,7 @@ import 'package:shoplite1/widgets/bottom_bar.dart';
 import 'package:shoplite1/widgets/check_box_user.dart';
 
 class LoginForm extends StatefulWidget {
-  LoginForm({Key? key, required this.selectedIndex}) : super(key: key);
-  int selectedIndex;
+  LoginForm({Key? key}) : super(key: key);
 
   @override
   _LoginFormState createState() => _LoginFormState();
@@ -77,7 +76,7 @@ class _LoginFormState extends State<LoginForm> {
                           loginController.text, passwordController.text);
                       int y = 0;
                       if (usr != null && usr.id > 0) {
-                        Navigator.pushNamed(context, '/', arguments: 1);
+                        Navigator.pushNamed(context, '/ShopMain', arguments: 1);
                       } else {
                         showDialog<bool>(
                           context: context,
@@ -135,7 +134,11 @@ class _LoginFormState extends State<LoginForm> {
                             passwordController.text, isCheckedFrm);
                         userReg = await UsersCrud.add(userReg);
                         //==================================
-                        print(userReg);
+                        if (userReg != null && userReg.id > 0) {
+                          print(userReg);
+                          Navigator.pushNamed(context, '/ShopMain',
+                              arguments: 1);
+                        }
                       }
                     },
                     child: Text(
@@ -149,7 +152,7 @@ class _LoginFormState extends State<LoginForm> {
           )
         ],
       )),
-      bottomNavigationBar: const BottomBarGeneral(selectedIndex: 3),
+      // bottomNavigationBar: const BottomBarGeneral(selectedIndex: 3),
     );
   }
 }

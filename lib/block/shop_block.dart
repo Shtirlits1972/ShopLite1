@@ -1,11 +1,19 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoplite1/model/order_row.dart';
+import 'package:shoplite1/model/users.dart';
 
-class KeeperOrderRow {
+class KeeperShop {
   List<OrderRow> order_row_List = [];
+  users user = users.empty();
 }
 
-class DataCubitOrderRow extends Cubit<KeeperOrderRow> {
+class DataCubitShop extends Cubit<KeeperShop> {
+  users get getUser => state.user;
+
+  setCurrentUser(users NewUser) {
+    state.user = NewUser;
+  }
+
   List<OrderRow> get getOrderRow => state.order_row_List;
 
   setOrderRowList(List<OrderRow> newList) {
@@ -65,5 +73,5 @@ class DataCubitOrderRow extends Cubit<KeeperOrderRow> {
     }
   }
 
-  DataCubitOrderRow(KeeperOrderRow initState) : super(initState);
+  DataCubitShop(KeeperShop initState) : super(initState);
 }

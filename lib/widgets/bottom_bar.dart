@@ -30,18 +30,18 @@ class BottomBarGeneral extends StatelessWidget {
           label: 'Products',
           backgroundColor: Colors.red,
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Login',
-          backgroundColor: Colors.cyanAccent,
-        ),
+        // BottomNavigationBarItem(
+        //   icon: Icon(Icons.person),
+        //   label: 'Login',
+        //   backgroundColor: Colors.cyanAccent,
+        // ),
       ],
       currentIndex: _selectedIndex,
       selectedItemColor: Colors.blue[800],
       onTap: (value) {
         print(value);
         if (value == 0) {
-          Navigator.pushNamed(context, '/', arguments: value);
+          Navigator.pushNamed(context, '/ShopMain', arguments: value);
         } else if (value == 1) {
           Navigator.pushNamed(context, '/Cart', arguments: value);
         } else if (value == 2) {
@@ -52,9 +52,9 @@ class BottomBarGeneral extends StatelessWidget {
         //   Navigator.pushNamed(context, '/ProductAddEdit', arguments: value);
         //}
 
-        else if (value == 3) {
-          Navigator.pushNamed(context, '/Login', arguments: value);
-        }
+        // else if (value == 3) {
+        //   Navigator.pushNamed(context, '/Login', arguments: value);
+        // }
       },
     );
   }

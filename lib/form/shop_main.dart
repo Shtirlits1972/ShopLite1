@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shoplite1/block/order_row_block.dart';
+import 'package:shoplite1/block/shop_block.dart';
 import 'package:shoplite1/constants.dart';
 import 'package:shoplite1/crud/product_crud.dart';
 import 'package:shoplite1/model/order_row.dart';
@@ -25,8 +25,7 @@ class _ShopMainState extends State<ShopMain> {
         centerTitle: true,
         title: const Text('ShopMain'),
       ),
-      body: BlocBuilder<DataCubitOrderRow, KeeperOrderRow>(
-          builder: (context, state) {
+      body: BlocBuilder<DataCubitShop, KeeperShop>(builder: (context, state) {
         return Center(
           child: ListView.separated(
             separatorBuilder: (context, index) => const Divider(
@@ -66,10 +65,9 @@ class _ShopMainState extends State<ShopMain> {
                                     products[index].PriceProduct,
                                     1);
 
-                                context.read<DataCubitOrderRow>().add(row);
-                                bool flag = context
-                                    .read<DataCubitOrderRow>()
-                                    .notEmpty();
+                                context.read<DataCubitShop>().add(row);
+                                bool flag =
+                                    context.read<DataCubitShop>().notEmpty();
                               });
                             },
                             icon: const Icon(

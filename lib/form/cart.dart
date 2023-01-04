@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shoplite1/block/order_row_block.dart';
+import 'package:shoplite1/block/shop_block.dart';
 import 'package:shoplite1/constants.dart';
 import 'package:shoplite1/model/order_row.dart';
 import 'package:shoplite1/widgets/bottom_bar.dart';
@@ -28,7 +28,7 @@ class _CartState extends State<Cart> {
         //   )
         // ],
       ),
-      body: BlocBuilder<DataCubitOrderRow, KeeperOrderRow>(
+      body: BlocBuilder<DataCubitShop, KeeperShop>(
         builder: (context, state) {
           return Center(
             child: Column(
@@ -41,8 +41,7 @@ class _CartState extends State<Cart> {
                       color: Colors.black,
                       thickness: 1,
                     ),
-                    itemCount:
-                        context.read<DataCubitOrderRow>().getOrderRow.length,
+                    itemCount: context.read<DataCubitShop>().getOrderRow.length,
                     itemBuilder: (context, index) {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,7 +50,7 @@ class _CartState extends State<Cart> {
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
                               context
-                                  .read<DataCubitOrderRow>()
+                                  .read<DataCubitShop>()
                                   .getOrderRow[index]
                                   .ProductName,
                               style: txt15,
@@ -62,7 +61,7 @@ class _CartState extends State<Cart> {
                               children: [
                                 Text(
                                   context
-                                      .read<DataCubitOrderRow>()
+                                      .read<DataCubitShop>()
                                       .getOrderRow[index]
                                       .qty
                                       .toStringAsFixed(2),
@@ -74,24 +73,22 @@ class _CartState extends State<Cart> {
                                     OrderRow row = OrderRow(
                                         0,
                                         context
-                                            .read<DataCubitOrderRow>()
+                                            .read<DataCubitShop>()
                                             .getOrderRow[index]
                                             .ProductId,
                                         0,
                                         context
-                                            .read<DataCubitOrderRow>()
+                                            .read<DataCubitShop>()
                                             .getOrderRow[index]
                                             .ProductName,
                                         context
-                                            .read<DataCubitOrderRow>()
+                                            .read<DataCubitShop>()
                                             .getOrderRow[index]
                                             .ProductPrice,
                                         1);
 
                                     setState(() {
-                                      context
-                                          .read<DataCubitOrderRow>()
-                                          .add(row);
+                                      context.read<DataCubitShop>().add(row);
                                     });
                                   },
                                   icon: const Icon(
@@ -106,24 +103,22 @@ class _CartState extends State<Cart> {
                                     OrderRow row = OrderRow(
                                         0,
                                         context
-                                            .read<DataCubitOrderRow>()
+                                            .read<DataCubitShop>()
                                             .getOrderRow[index]
                                             .ProductId,
                                         0,
                                         context
-                                            .read<DataCubitOrderRow>()
+                                            .read<DataCubitShop>()
                                             .getOrderRow[index]
                                             .ProductName,
                                         context
-                                            .read<DataCubitOrderRow>()
+                                            .read<DataCubitShop>()
                                             .getOrderRow[index]
                                             .ProductPrice,
                                         -1);
 
                                     setState(() {
-                                      context
-                                          .read<DataCubitOrderRow>()
-                                          .add(row);
+                                      context.read<DataCubitShop>().add(row);
                                     });
                                   },
                                   icon: const Icon(
@@ -143,7 +138,7 @@ class _CartState extends State<Cart> {
                 Expanded(
                   flex: 1,
                   child: Text(
-                    'Total:  ${context.read<DataCubitOrderRow>().getTotal().toStringAsFixed(2)}\$',
+                    'Total:  ${context.read<DataCubitShop>().getTotal().toStringAsFixed(2)}\$',
                     style: txt20,
                   ),
                 ),
@@ -162,7 +157,7 @@ class _CartState extends State<Cart> {
                             onPressed: () {
                               try {
                                 setState(() {
-                                  context.read<DataCubitOrderRow>().clear();
+                                  context.read<DataCubitShop>().clear();
                                   print('Clear cart');
                                 });
                               } catch (e) {
