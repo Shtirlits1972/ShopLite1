@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shoplite1/block/shop_block.dart';
 import 'package:shoplite1/constants.dart';
+import 'package:shoplite1/crud/order_detail_crud.dart';
+import 'package:shoplite1/crud/order_head_crud.dart';
+import 'package:shoplite1/model/order_detail.dart';
+import 'package:shoplite1/model/order_head.dart';
 import 'package:shoplite1/model/order_row.dart';
 import 'package:shoplite1/widgets/bottom_bar.dart';
 
@@ -19,14 +23,9 @@ class _CartState extends State<Cart> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Cart'),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () async {},
-        //     icon: const Icon(Icons.delete_rounded),
-        //     tooltip: 'Clear cart',
-        //   )
-        // ],
+        title: const Text(
+            //  context.read<DataCubitShop>().getUser.Login,
+            'Cart'),
       ),
       body: BlocBuilder<DataCubitShop, KeeperShop>(
         builder: (context, state) {
@@ -177,10 +176,34 @@ class _CartState extends State<Cart> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(5))),
                           child: TextButton(
-                            onPressed: () {
+                            onPressed: () async {
                               try {
-                                setState(() {
-                                  print('Add to order');
+                                int userId =
+                                    context.read<DataCubitShop>().getUser.id;
+                                DateTime dt = DateTime.now();
+
+                                order_head head = order_head(0, userId, dt, 0);
+
+                                OrderHeadCrud.add(head).then((value) {
+                                  List<OrderRow> list =
+                                      context.read<DataCubitShop>().getOrderRow;
+
+                                  for (int i = 0; i < list.length; i++) {
+                                    order_detail detail = order_detail(
+                                        0,
+                                        value.id,
+                                        list[i].ProductId,
+                                        list[i].ProductName,
+                                        list[i].ProductPrice,
+                                        list[i].qty,
+                                        (list[i].ProductPrice * list[i].qty));
+                                    OrderDetailCrud.add(detail);
+                                  }
+
+                                  setState(() {
+                                    context.read<DataCubitShop>().clear();
+                                    print('Clear cart');
+                                  });
                                 });
                               } catch (e) {
                                 print(e);

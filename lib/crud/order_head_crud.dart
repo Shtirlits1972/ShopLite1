@@ -14,7 +14,8 @@ class OrderHeadCrud {
     Database db = await openDatabase(path, version: 1);
 
     head = await db.transaction<order_head>((txn) async {
-      int id = await txn.rawInsert(command, [model.user_id, model.data_order]);
+      int id = await txn
+          .rawInsert(command, [model.user_id, model.data_order.toString()]);
       order_head head1 =
           order_head(id, model.user_id, model.data_order, model.total_sum);
       return head1;
@@ -54,7 +55,7 @@ class OrderHeadCrud {
     }
   }
 
-  static Future<List<order_head>> getAll() async {
+  static Future<List<order_head>> getAll(int userId) async {
     List<order_head> listorder_head = [];
 
     try {
@@ -64,7 +65,8 @@ class OrderHeadCrud {
       Database db = await openDatabase(path, version: 1);
 
       List<Map> list = await db.rawQuery(
-          'SELECT id, NameProduct, PriceProduct FROM order_head_view ;');
+          'SELECT id, user_id, data_order, total_sum FROM order_head_view where user_id = ? ;',
+          [userId]);
 
       for (int i = 0; i < list.length; i++) {
         int id = list[i]['id'];

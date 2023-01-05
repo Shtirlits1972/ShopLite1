@@ -12,6 +12,7 @@ class DataCubitShop extends Cubit<KeeperShop> {
 
   setCurrentUser(users NewUser) {
     state.user = NewUser;
+    print('NewUser = $NewUser');
   }
 
   List<OrderRow> get getOrderRow => state.order_row_List;

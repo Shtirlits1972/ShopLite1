@@ -22,7 +22,7 @@ class InitCrud {
     String order_head = 'CREATE TABLE [order_head](  ' +
         '[id] INTEGER PRIMARY KEY AUTOINCREMENT,   ' +
         '[user_id] INTEGER NOT NULL,  ' +
-        '[data_order] DateTime NOT NULL ); ';
+        '[data_order] DATETIME NOT NULL ); ';
 
     String order_detail = ' CREATE TABLE [order_detail]( ' +
         '[id] INTEGER PRIMARY KEY AUTOINCREMENT,  ' +

@@ -84,6 +84,8 @@ class OrderDetailCrud {
 
         list_order_detail.add(detail);
       }
+
+      return list_order_detail;
     } catch (e) {
       print(e);
     }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shoplite1/block/shop_block.dart';
 import 'package:shoplite1/constants.dart';
 import 'package:shoplite1/crud/users_crud.dart';
 import 'package:shoplite1/model/users.dart';
@@ -72,28 +74,31 @@ class _LoginFormState extends State<LoginForm> {
                       print(
                           'login = ${loginController.text}, password = ${passwordController.text}');
                       print('isCheckedFrm = $isCheckedFrm');
-                      users usr = await UsersCrud.LoginUser(
-                          loginController.text, passwordController.text);
-                      int y = 0;
-                      if (usr != null && usr.id > 0) {
-                        Navigator.pushNamed(context, '/ShopMain', arguments: 1);
-                      } else {
-                        showDialog<bool>(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            title: const Text('Warning!'),
-                            content: const Text('Chack Login and Password!'),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context, true);
-                                },
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          ),
-                        );
-                      }
+                      UsersCrud.LoginUser(
+                              loginController.text, passwordController.text)
+                          .then((value) {
+                        if (value != null && value.id > 0) {
+                          context.read<DataCubitShop>().setCurrentUser(value);
+                          Navigator.pushNamed(context, '/ShopMain',
+                              arguments: 1);
+                        } else {
+                          showDialog<bool>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text('Warning!'),
+                              content: const Text('Chack Login and Password!'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context, true);
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      });
                     },
                     child: Text(
                       'login',
@@ -130,15 +135,21 @@ class _LoginFormState extends State<LoginForm> {
                         );
                         // print('Login and Password can not be empty!');
                       } else {
-                        users userReg = users(0, loginController.text,
+                        users usr = users(0, loginController.text,
                             passwordController.text, isCheckedFrm);
-                        userReg = await UsersCrud.add(userReg);
+
+                        UsersCrud.add(usr).then((value) {
+                          if (value != null && value.id > 0) {
+                            context.read<DataCubitShop>().setCurrentUser(value);
+                            print(value);
+                            Navigator.pushNamed(context, '/ShopMain',
+                                arguments: 1);
+                          } else {
+                            print('user not correct');
+                          }
+                        });
                         //==================================
-                        if (userReg != null && userReg.id > 0) {
-                          print(userReg);
-                          Navigator.pushNamed(context, '/ShopMain',
-                              arguments: 1);
-                        }
+
                       }
                     },
                     child: Text(

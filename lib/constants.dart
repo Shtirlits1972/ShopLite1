@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/src/intl/date_format.dart';
 
 String dbName = 'ShopLiteDB';
 
@@ -13,4 +15,4 @@ TextStyle txt30 = const TextStyle(
 
 IconData scale = IconData(0xf0564, fontFamily: 'MaterialIcons');
 
-//  final DateFormat dataFormat = DateFormat('dd MMMM yyyy HH:mm');
+final DateFormat dataFormat = DateFormat('dd.MM.yyyy HH:mm');

@@ -4,6 +4,8 @@ import 'package:shoplite1/block/shop_block.dart';
 
 import 'package:shoplite1/form/cart.dart';
 import 'package:shoplite1/form/login_form.dart';
+import 'package:shoplite1/form/order_detail_form.dart';
+import 'package:shoplite1/form/orders_form.dart';
 import 'package:shoplite1/form/product_add_edit.dart';
 import 'package:shoplite1/form/product_view.dart';
 import 'package:shoplite1/form/shop_main.dart';
@@ -13,6 +15,7 @@ import 'package:shoplite1/model/product.dart';
 
 class AppRouter {
   int selectIndex = 0;
+  int orderId = 0;
   final DataCubitShop shopCubit = DataCubitShop(KeeperShop());
 
   Route onGenerateRoute(RouteSettings routeSettings) {
@@ -59,6 +62,23 @@ class AppRouter {
             selectedIndex: selectIndex,
           ),
         );
+
+      case '/OrdersForm':
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider.value(
+            value: shopCubit,
+            child: OrdersForm(
+              selectedIndex: selectIndex,
+            ),
+          ),
+        );
+
+      // case '/OrderDetailForm':
+      //   return MaterialPageRoute(
+      //     builder: (context) => OrderDetailForm(
+      //       orderId: orderId,
+      //     ),
+      //   );
 
       default:
         return MaterialPageRoute(
