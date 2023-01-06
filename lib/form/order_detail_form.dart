@@ -44,7 +44,7 @@ class _OrderDetailFormState extends State<OrderDetailForm> {
                     ),
                   ),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         list[index].NameProduct,

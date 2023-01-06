@@ -11,7 +11,7 @@ class InitCrud {
         'CREATE TABLE [OrderRow](  [id] INTEGER PRIMARY KEY AUTOINCREMENT,   [ProductId] INT NOT NULL DEFAULT 0, [OrderId] INT NOT NULL DEFAULT 0,   [Qty] INT DEFAULT 0); ';
 
     String orderRowView =
-        'CREATE VIEW OrderRowView AS  SELECT R.id,   R.ProductId,  P.NameProduct AS "ProductName",  P.PriceProduct,  R.Qty  FROM OrderRow R   LEFT JOIN Product P ON P.id = R.ProductId;';
+        'CREATE VIEW OrderRowView AS SELECT R.id,   R.ProductId,  P.NameProduct AS "ProductName",  P.PriceProduct,  R.Qty  FROM OrderRow R  LEFT JOIN Product P ON P.id = R.ProductId;';
 
     String usersTab = ' CREATE TABLE [users](  ' +
         '        [id] INTEGER PRIMARY KEY AUTOINCREMENT,   ' +
@@ -38,7 +38,7 @@ class InitCrud {
         'P.NameProduct, ' +
         'P.PriceProduct, ' +
         'd.qty, ' +
-        '(P.PriceProduct * d.qty) as sum_row ' +
+        'IFNULL((P.PriceProduct * d.qty), 0) as sum_row ' +
         'FROM  ' +
         'order_detail d LEFT JOIN Product P ' +
         'ON P.id = d.tovar_id; ';
@@ -48,7 +48,7 @@ class InitCrud {
         'h.id, ' +
         'h.user_id,  ' +
         'h.data_order,  ' +
-        'SUM(d.sum_row) as total_sum  ' +
+        'SUM(IFNULL(d.sum_row, 0)) as total_sum  ' +
         'FROM ' +
         'order_head h LEFT JOIN order_detail_view d  ' +
         'ON h.id = d.order_id  ' +

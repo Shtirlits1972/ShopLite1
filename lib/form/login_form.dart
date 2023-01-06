@@ -22,6 +22,7 @@ class _LoginFormState extends State<LoginForm> {
     bool isCheckedFrm = false;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           'Login',

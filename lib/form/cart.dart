@@ -178,33 +178,37 @@ class _CartState extends State<Cart> {
                           child: TextButton(
                             onPressed: () async {
                               try {
-                                int userId =
-                                    context.read<DataCubitShop>().getUser.id;
-                                DateTime dt = DateTime.now();
+                                List<OrderRow> list =
+                                    context.read<DataCubitShop>().getOrderRow;
+                                if (list != null && list.length > 0) {
+                                  int userId =
+                                      context.read<DataCubitShop>().getUser.id;
+                                  DateTime dt = DateTime.now();
 
-                                order_head head = order_head(0, userId, dt, 0);
+                                  order_head head =
+                                      order_head(0, userId, dt, 0);
 
-                                OrderHeadCrud.add(head).then((value) {
-                                  List<OrderRow> list =
-                                      context.read<DataCubitShop>().getOrderRow;
+                                  OrderHeadCrud.add(head).then((value) {
+                                    for (int i = 0; i < list.length; i++) {
+                                      order_detail detail = order_detail(
+                                          0,
+                                          value.id,
+                                          list[i].ProductId,
+                                          list[i].ProductName,
+                                          list[i].ProductPrice,
+                                          list[i].qty,
+                                          (list[i].ProductPrice * list[i].qty));
+                                      OrderDetailCrud.add(detail);
+                                    }
 
-                                  for (int i = 0; i < list.length; i++) {
-                                    order_detail detail = order_detail(
-                                        0,
-                                        value.id,
-                                        list[i].ProductId,
-                                        list[i].ProductName,
-                                        list[i].ProductPrice,
-                                        list[i].qty,
-                                        (list[i].ProductPrice * list[i].qty));
-                                    OrderDetailCrud.add(detail);
-                                  }
-
-                                  setState(() {
-                                    context.read<DataCubitShop>().clear();
-                                    print('Clear cart');
+                                    setState(() {
+                                      context.read<DataCubitShop>().clear();
+                                      print('Clear cart');
+                                    });
                                   });
-                                });
+                                } else {
+                                  print('Cart is empty!');
+                                }
                               } catch (e) {
                                 print(e);
                               }

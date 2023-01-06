@@ -73,7 +73,8 @@ class OrderHeadCrud {
 
         int user_id = list[i]['user_id'];
         DateTime data_order = DateTime.parse(list[i]['data_order']);
-        double total_sum = double.parse(list[i]['total_sum'].toString());
+        double total_sum = double.tryParse(list[i]['total_sum'].toString())!;
+
         order_head head = order_head(id, user_id, data_order, total_sum);
 
         listorder_head.add(head);
